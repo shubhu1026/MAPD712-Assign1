@@ -94,7 +94,14 @@ export default function App() {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Weight</Text>
+          <Text style={styles.label}>
+            Weight{" "}
+            {selectedSystem == "Metric"
+              ? "(kg)"
+              : selectedSystem == "Standard"
+              ? "(lbs)"
+              : ""}
+          </Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your weight"
@@ -106,7 +113,14 @@ export default function App() {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Height</Text>
+          <Text style={styles.label}>
+            Height{" "}
+            {selectedSystem == "Metric"
+              ? "(cms)"
+              : selectedSystem == "Standard"
+              ? "(feet)"
+              : ""}
+          </Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your height"
