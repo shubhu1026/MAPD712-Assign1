@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View, Alert } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { CustomPicker } from "react-native-custom-picker";
 
 export default function App() {
@@ -67,58 +76,60 @@ export default function App() {
   const options = ["Metric", "Standard"];
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>BMI Calculator</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <Text style={styles.heading}>BMI Calculator</Text>
 
-      <View style={styles.unitPicker}>
-        <Text>Measurement System:</Text>
+        <View style={styles.unitPicker}>
+          <Text>Measurement System:</Text>
 
-        <CustomPicker
-          options={options}
-          onValueChange={(value) => {
-            setSelectedSystem(value);
-          }}
-          style={styles.picker}
-          textStyle={{ color: "#b5c6e0" }}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Weight</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your weight"
-          onChangeText={(text) => setWeight(text)}
-          value={weight}
-          keyboardType="numeric"
-          placeholderTextColor="#333"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Height</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your height"
-          onChangeText={(text) => setHeight(text)}
-          value={height}
-          keyboardType="numeric"
-          placeholderTextColor="#333"
-        />
-      </View>
-
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <Button onPress={OnSubmit} title="Calculate BMI" color="#b5c6e0" />
+          <CustomPicker
+            options={options}
+            onValueChange={(value) => {
+              setSelectedSystem(value);
+            }}
+            style={styles.picker}
+            textStyle={{ color: "#b5c6e0" }}
+          />
         </View>
-        <View style={styles.button}>
-          <Button onPress={OnClear} title="Clear" color="#b5c6e0" />
-        </View>
-      </View>
 
-      <Text style={styles.result}>Your BMI: {bmi}</Text>
-      <Text style={styles.result}>{weightStatus}</Text>
-    </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Weight</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your weight"
+            onChangeText={(text) => setWeight(text)}
+            value={weight}
+            keyboardType="numeric"
+            placeholderTextColor="#333"
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Height</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your height"
+            onChangeText={(text) => setHeight(text)}
+            value={height}
+            keyboardType="numeric"
+            placeholderTextColor="#333"
+          />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button onPress={OnSubmit} title="Calculate BMI" color="#b5c6e0" />
+          </View>
+          <View style={styles.button}>
+            <Button onPress={OnClear} title="Clear" color="#b5c6e0" />
+          </View>
+        </View>
+
+        <Text style={styles.result}>Your BMI: {bmi}</Text>
+        <Text style={styles.result}>{weightStatus}</Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
