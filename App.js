@@ -10,9 +10,7 @@ export default function App() {
   const [selectedSystem, setSelectedSystem] = useState("metric");
 
   const OnSubmit = () => {
-    let h = parseFloat(height);
-    let w = parseFloat(weight);
-
+    // Check if the user has selected a unit system for bmi calculation
     if (selectedSystem != "Metric" && selectedSystem != "Standard") {
       Alert.alert(
         "Alert",
@@ -21,6 +19,20 @@ export default function App() {
       );
       return;
     }
+
+    // check if the user has entered both height and weight values
+    if (h == "" || w == "") {
+      Alert.alert(
+        "Alert",
+        "Please input values before pressing the 'Calculate' button",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+      );
+      return;
+    }
+
+    let h = parseFloat(height);
+    let w = parseFloat(weight);
+
     if (selectedSystem.toLowerCase() === "standard") {
       // Convert feet to cm
       h *= 30.48;
@@ -67,6 +79,7 @@ export default function App() {
           placeholderTextColor="#333"
         />
       </View>
+
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Height</Text>
         <TextInput
@@ -78,6 +91,7 @@ export default function App() {
           placeholderTextColor="#333"
         />
       </View>
+
       <Text style={styles.result}>Your BMI: {bmi}</Text>
       <Button onPress={OnSubmit} title="Calculate BMI" color="#b5c6e0" />
     </View>
