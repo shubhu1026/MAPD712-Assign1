@@ -6,6 +6,7 @@ export default function App() {
   const [weight, setWeight] = React.useState("");
   const [height, setHeight] = React.useState("");
   const [bmi, setBMI] = React.useState("");
+  const [weightStatus, setWeightStatus] = React.useState("");
 
   const [selectedSystem, setSelectedSystem] = useState("metric");
 
@@ -47,6 +48,20 @@ export default function App() {
     // BMI formula and output only 2 digits after decimal
     const b = (w / (h * h)).toFixed(2);
     setBMI(b);
+
+    // set weight status according to the bmi
+    if (b < 18.5) setWeightStatus("Underweight");
+    else if (b >= 18.5 && b < 25) setWeightStatus("Healthy Weight");
+    else if (b >= 25 && b < 30) setWeightStatus("Overweight");
+    else setWeightStatus("Obesity");
+  };
+
+  // Clear function called when clear button is pressed to clear all values
+  const OnClear = () => {
+    setWeight("");
+    setBMI("");
+    setHeight("");
+    setWeightStatus("");
   };
 
   const options = ["Metric", "Standard"];
@@ -56,7 +71,7 @@ export default function App() {
       <Text style={styles.heading}>BMI Calculator</Text>
 
       <View style={styles.unitPicker}>
-        <Text>Unit System:</Text>
+        <Text>Measurement System:</Text>
 
         <CustomPicker
           options={options}
@@ -92,8 +107,17 @@ export default function App() {
         />
       </View>
 
-      <Button onPress={OnSubmit} title="Calculate BMI" color="#b5c6e0" />
+      <View style={styles.buttonContainer}>
+        <View style={styles.button}>
+          <Button onPress={OnSubmit} title="Calculate BMI" color="#b5c6e0" />
+        </View>
+        <View style={styles.button}>
+          <Button onPress={OnClear} title="Clear" color="#b5c6e0" />
+        </View>
+      </View>
+
       <Text style={styles.result}>Your BMI: {bmi}</Text>
+      <Text style={styles.result}>{weightStatus}</Text>
     </View>
   );
 }
@@ -145,5 +169,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontWeight: "bold",
     color: "#333",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  button: {
+    flex: 1,
+    marginHorizontal: 5,
   },
 });
