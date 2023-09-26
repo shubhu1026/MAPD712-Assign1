@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View, Alert } from "react-native";
 import { CustomPicker } from "react-native-custom-picker";
 
 export default function App() {
@@ -13,7 +13,15 @@ export default function App() {
     let h = parseFloat(height);
     let w = parseFloat(weight);
 
-    if (selectedSystem === "standard") {
+    if (selectedSystem != "Metric" && selectedSystem != "Standard") {
+      Alert.alert(
+        "Alert",
+        "Please select a unit system before pressing the 'Calculate' button",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+      );
+      return;
+    }
+    if (selectedSystem.toLowerCase() === "standard") {
       // Convert feet to cm
       h *= 30.48;
 
@@ -36,14 +44,15 @@ export default function App() {
       <Text style={styles.heading}>BMI Calculator</Text>
 
       <View style={styles.unitPicker}>
-        <Text style={styles.label}>Unit System:</Text>
+        <Text>Unit System:</Text>
 
         <CustomPicker
           options={options}
           onValueChange={(value) => {
-            setSelectedSystem(value.toLowerCase());
+            setSelectedSystem(value);
           }}
           style={styles.picker}
+          textStyle={{ color: "#b5c6e0" }}
         />
       </View>
 
@@ -55,6 +64,7 @@ export default function App() {
           onChangeText={(text) => setWeight(text)}
           value={weight}
           keyboardType="numeric"
+          placeholderTextColor="#333"
         />
       </View>
       <View style={styles.inputContainer}>
@@ -65,10 +75,11 @@ export default function App() {
           onChangeText={(text) => setHeight(text)}
           value={height}
           keyboardType="numeric"
+          placeholderTextColor="#333"
         />
       </View>
       <Text style={styles.result}>Your BMI: {bmi}</Text>
-      <Button onPress={OnSubmit} title="Calculate BMI" />
+      <Button onPress={OnSubmit} title="Calculate BMI" color="#b5c6e0" />
     </View>
   );
 }
@@ -76,14 +87,16 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#ebf4f5",
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 20,
+    padding: 20,
   },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
+    color: "#333",
   },
   unitPicker: {
     flexDirection: "row",
@@ -93,14 +106,11 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginRight: 10,
+    color: "#333",
   },
   picker: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 4,
-    padding: 8,
-    fontSize: 16,
+    borderColor: "#b5c6e0",
+    color: "#b5c6e0",
   },
   inputContainer: {
     flexDirection: "row",
@@ -109,15 +119,17 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    marginLeft: 10,
+    borderColor: "#b5c6e0",
     borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 4,
     padding: 8,
     fontSize: 16,
+    color: "#333",
   },
   result: {
     fontSize: 18,
     marginTop: 20,
     fontWeight: "bold",
+    color: "#333",
   },
 });
