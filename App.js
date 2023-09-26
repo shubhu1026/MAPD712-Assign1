@@ -21,7 +21,7 @@ export default function App() {
     }
 
     // check if the user has entered both height and weight values
-    if (h == "" || w == "") {
+    if (height == "" || weight == "") {
       Alert.alert(
         "Alert",
         "Please input values before pressing the 'Calculate' button",
