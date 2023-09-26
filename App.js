@@ -92,8 +92,8 @@ export default function App() {
         />
       </View>
 
-      <Text style={styles.result}>Your BMI: {bmi}</Text>
       <Button onPress={OnSubmit} title="Calculate BMI" color="#b5c6e0" />
+      <Text style={styles.result}>Your BMI: {bmi}</Text>
     </View>
   );
 }
